@@ -1,67 +1,17 @@
 <script lang="ts">
-	let hero_height: number = $state(0);
-	let scroll_y: number = $state(0);
-	let navbar_state: 'HERO' | 'DEFAULT' = $state('HERO');
+	import { hero_height } from '../lib/stores/hero-state.svelte';
+	let bind_height: number = $state(0);
 
 	$effect(() => {
-		if (window !== undefined) {
-			if (scroll_y > hero_height) {
-				navbar_state = 'DEFAULT';
-			} else if (scroll_y <= hero_height) {
-				navbar_state = 'HERO';
-			}
-		}
+		$hero_height = bind_height;
 	});
 </script>
 
-<svelte:window bind:scrollY={scroll_y} />
+<svelte:head>
+	<title>Beranda - Yayasan Padepokan Fatwa Kehidupan</title>
+</svelte:head>
 
-<header
-	class="fixed left-0 top-0 z-[999] flex h-24 w-full items-center justify-center py-5 transition-all duration-500 ease-in {(navbar_state ===
-		'HERO' &&
-		'bg-transparent text-white') ||
-		(navbar_state === 'DEFAULT' && 'bg-neutral-50 text-neutral-950 shadow-sm')}"
->
-	<div
-		class="container mx-auto flex max-w-screen-2xl items-center justify-between lg:px-10 2xl:px-5"
-	>
-		<a href="/" class="flex items-center gap-2.5">
-			{#if navbar_state === 'HERO'}
-				<img
-					class="size-14"
-					src="/brands/yayasan-pdfk-white-logo.png"
-					alt="Yayasan PDFK B&W Logo"
-				/>
-			{:else if navbar_state === 'DEFAULT'}
-				<img
-					class="size-14"
-					src="/brands/yayasan-pdfk-color-logo.png"
-					alt="Yayasan PDFK Color Logo"
-				/>
-			{/if}
-
-			<div class="mt-1.5 w-44 text-left font-medium">
-				<p class="text-sm leading-tight">Yayasan Padepokan</p>
-				<p class="text-lg leading-tight">Fatwa Kehidupan</p>
-			</div>
-		</a>
-
-		<nav class="flex items-center gap-6">
-			<a href="/" class="text-sm font-semibold uppercase tracking-wide">Tentang</a>
-			<a href="/" class="text-sm font-semibold uppercase tracking-wide">Laporan</a>
-			<a href="/" class="text-sm font-semibold uppercase tracking-wide">Berita</a>
-			<a href="/" class="text-sm font-semibold uppercase tracking-wide">Program</a>
-			<a
-				href="/"
-				class="rounded-full border border-emerald-100/25 bg-emerald-700/95 px-5 py-3.5 text-xs font-semibold uppercase tracking-wide text-neutral-50 backdrop-blur-sm transition-all duration-300 ease-in hover:bg-emerald-700/75"
-			>
-				Donasi Sekarang
-			</a>
-		</nav>
-	</div>
-</header>
-
-<section bind:clientHeight={hero_height} class="hero relative h-screen overflow-hidden">
+<section bind:clientHeight={bind_height} class="hero relative h-screen overflow-hidden">
 	<img
 		class="absolute inset-0 -z-20 h-full w-full object-cover"
 		src="./images/hero-photo-1.jpg"
@@ -219,7 +169,7 @@
 
 				<div class="mt-20 flex items-center gap-3.5">
 					<a
-						href="/"
+						href="/program/baksos-fk-palestina"
 						class="rounded-full border border-emerald-300/25 bg-emerald-600/50 px-5 py-3 text-sm font-bold"
 					>
 						Donasi Sekarang
@@ -327,7 +277,7 @@
 
 				<div class="mt-20 flex items-center gap-3.5">
 					<a
-						href="/"
+						href="/program/baksos-fk-indonesia"
 						class="rounded-full border border-emerald-300/25 bg-emerald-600/50 px-5 py-3 text-sm font-bold"
 					>
 						Donasi Sekarang
@@ -487,21 +437,21 @@
 				dengan Uluran Anda.
 			</h3>
 
-			<div class="mt-7 flex items-center gap-3.5">
-				<a
-					href="/"
-					class="rounded-full border border-emerald-300/25 bg-emerald-600 px-5 py-3 text-sm font-bold text-white"
-				>
-					Donasi Sekarang
-				</a>
+				<div class="mt-7 flex items-center gap-3.5">
+					<a
+						href="/"
+						class="rounded-full border border-emerald-300/25 bg-emerald-600 px-5 py-3 text-sm font-bold text-white"
+					>
+						Donasi Sekarang
+					</a>
 
-				<a
-					href="/"
-					class="rounded-full border border-neutral-300 bg-neutral-200/25 px-5 py-3 text-sm font-bold"
-				>
-					Lihat Laporan Donasi
-				</a>
-			</div>
+					<a
+						href="/"
+						class="rounded-full border border-neutral-300 bg-neutral-200/25 px-5 py-3 text-sm font-bold"
+					>
+						Lihat Laporan Donasi
+					</a>
+				</div>
 		</div>
 	</div>
 
@@ -565,114 +515,6 @@
 		</div>
 	</div>
 </section>
-
-<footer class="relative overflow-hidden bg-neutral-50 py-16">
-	<img
-		class="absolute -bottom-16 -right-16 size-64 opacity-50 grayscale"
-		src="/brands/yayasan-pdfk-color-logo.png"
-		alt="Yayasan PDFK Color Logo"
-	/>
-
-	<div class="container mx-auto max-w-screen-2xl px-10">
-		<div class="flex items-end justify-between">
-			<a href="/" class="flex items-center gap-2.5">
-				<img
-					class="size-14"
-					src="/brands/yayasan-pdfk-color-logo.png"
-					alt="Yayasan PDFK Color Logo"
-				/>
-
-				<div class="mt-1.5 w-44 text-left font-medium">
-					<p class="text-sm leading-tight">Yayasan Padepokan</p>
-					<p class="text-lg leading-tight">Fatwa Kehidupan</p>
-				</div>
-			</a>
-
-			<div class="flex items-center gap-4">
-				<div class="flex size-9 items-center justify-center rounded-full bg-[#0866FF]">
-					<svg
-						width="24px"
-						height="24px"
-						stroke-width="2"
-						viewBox="0 0 24 24"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-						color="#fff"
-						><path
-							d="M21 8V16C21 18.7614 18.7614 21 16 21H8C5.23858 21 3 18.7614 3 16V8C3 5.23858 5.23858 3 8 3H16C18.7614 3 21 5.23858 21 8Z"
-							stroke="#fff"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						></path><path
-							d="M11 21C11 18 11 15 11 12C11 9.8125 11.5 8 15 8"
-							stroke="#fff"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						></path><path
-							d="M9 13H11H15"
-							stroke="#fff"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						></path></svg
-					>
-				</div>
-
-				<div
-					class="flex size-9 items-center justify-center rounded-full"
-					style="background: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); "
-				>
-					<svg
-						width="24px"
-						height="24px"
-						stroke-width="1.5"
-						viewBox="0 0 24 24"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-						stroke="#fff"
-						><path
-							d="M12 16C14.2091 16 16 14.2091 16 12C16 9.79086 14.2091 8 12 8C9.79086 8 8 9.79086 8 12C8 14.2091 9.79086 16 12 16Z"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						></path><path
-							d="M3 16V8C3 5.23858 5.23858 3 8 3H16C18.7614 3 21 5.23858 21 8V16C21 18.7614 18.7614 21 16 21H8C5.23858 21 3 18.7614 3 16Z"
-						></path><path
-							d="M17.5 6.51L17.51 6.49889"
-							stroke-linecap="round"
-							stroke-linejoin="round"
-						></path></svg
-					>
-				</div>
-				<div class="flex size-9 items-center justify-center rounded-full bg-[#FF0000]">
-					<svg
-						width="24px"
-						height="24px"
-						stroke-width="2"
-						viewBox="0 0 24 24"
-						fill="none"
-						xmlns="http://www.w3.org/2000/svg"
-						stroke="#fff"
-						><path d="M14 12L10.5 14V10L14 12Z" stroke-linecap="round" stroke-linejoin="round"
-						></path><path
-							d="M2 12.7075V11.2924C2 8.39705 2 6.94939 2.90549 6.01792C3.81099 5.08645 5.23656 5.04613 8.08769 4.96549C9.43873 4.92728 10.8188 4.8999 12 4.8999C13.1812 4.8999 14.5613 4.92728 15.9123 4.96549C18.7634 5.04613 20.189 5.08645 21.0945 6.01792C22 6.94939 22 8.39705 22 11.2924V12.7075C22 15.6028 22 17.0505 21.0945 17.9819C20.189 18.9134 18.7635 18.9537 15.9124 19.0344C14.5613 19.0726 13.1812 19.1 12 19.1C10.8188 19.1 9.43867 19.0726 8.0876 19.0344C5.23651 18.9537 3.81097 18.9134 2.90548 17.9819C2 17.0505 2 15.6028 2 12.7075Z"
-						></path></svg
-					>
-				</div>
-			</div>
-		</div>
-
-		<div class="mt-16 flex items-center justify-between pl-2">
-			<p class="text-sm">© 2024 Yayasan PDFK. All Rights Reserved</p>
-
-			<nav class="mb-2 flex items-center gap-8">
-				<a href="/program" class="text-xs font-semibold uppercase">Tentang</a>
-				<a href="/program" class="text-xs font-semibold uppercase">Laporan</a>
-				<a href="/program" class="text-xs font-semibold uppercase">Berita</a>
-				<a href="/program" class="text-xs font-semibold uppercase">Program</a>
-				<a href="/program" class="text-xs font-semibold uppercase">Donasi Sekarang</a>
-			</nav>
-		</div>
-	</div>
-</footer>
 
 <style>
 	.hero-ov-1st {
